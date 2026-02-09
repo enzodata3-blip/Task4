@@ -128,8 +128,8 @@ def ridge_test_multiple_lambda(xArr, yArr, num_lambda=30):
         wMat - coefficient matrix (each row = coefficients for one λ)
         lambda_values - corresponding λ values tested
     """
-    xMat = np.mat(xArr)
-    yMat = np.mat(yArr).T
+    xMat = np.asmatrix(xArr)
+    yMat = np.asmatrix(yArr).T
 
     # MUST standardize data before ridge regression
     yMean = np.mean(yMat, axis=0)
@@ -188,12 +188,12 @@ def lwlr(testPoint, xArr, yArr, k=1.0):
     Returns:
         prediction - predicted value for testPoint
     """
-    xMat = np.mat(xArr)
-    yMat = np.mat(yArr).T
+    xMat = np.asmatrix(xArr)
+    yMat = np.asmatrix(yArr).T
     m = np.shape(xMat)[0]
 
     # Create weight matrix (diagonal matrix with Gaussian weights)
-    weights = np.mat(np.eye((m)))
+    weights = np.asmatrix(np.eye((m)))
 
     for j in range(m):
         diffMat = testPoint - xMat[j, :]
@@ -270,8 +270,8 @@ def stagewise_regression(xArr, yArr, eps=0.01, numIt=100):
     Returns:
         returnMat - coefficient matrix (each row = coefficients after iteration i)
     """
-    xMat = np.mat(xArr)
-    yMat = np.mat(yArr).T
+    xMat = np.asmatrix(xArr)
+    yMat = np.asmatrix(yArr).T
 
     # Standardize data
     xMat, yMat = standardize_data(xMat, yMat)
@@ -344,8 +344,8 @@ def gradient_ascent(dataMatIn, classLabels, alpha=0.001, maxCycles=500):
     Returns:
         weights - logistic regression coefficients
     """
-    dataMatrix = np.mat(dataMatIn)
-    labelMat = np.mat(classLabels).transpose()
+    dataMatrix = np.asmatrix(dataMatIn)
+    labelMat = np.asmatrix(classLabels).transpose()
     m, n = np.shape(dataMatrix)
 
     weights = np.ones((n, 1))
@@ -538,10 +538,10 @@ def compare_regression_models(xTrain, yTrain, xTest, yTest):
     print("-"*70)
 
     # Standard Linear Regression
-    xMatTrain = np.mat(xTrain)
-    yMatTrain = np.mat(yTrain).T
-    xMatTest = np.mat(xTest)
-    yMatTest = np.mat(yTest).T
+    xMatTrain = np.asmatrix(xTrain)
+    yMatTrain = np.asmatrix(yTrain).T
+    xMatTest = np.asmatrix(xTest)
+    yMatTest = np.asmatrix(yTest).T
 
     xTx = xMatTrain.T * xMatTrain
     if np.linalg.det(xTx) != 0.0:
@@ -606,9 +606,9 @@ def cross_validate_regression(xArr, yArr, k_folds=5):
         yTest = [yArr[j] for j in testIndices]
 
         # Train and evaluate
-        xMatTrain = np.mat(xTrain)
-        yMatTrain = np.mat(yTrain).T
-        xMatTest = np.mat(xTest)
+        xMatTrain = np.asmatrix(xTrain)
+        yMatTrain = np.asmatrix(yTrain).T
+        xMatTest = np.asmatrix(xTest)
 
         xTx = xMatTrain.T * xMatTrain
         if np.linalg.det(xTx) != 0.0:
