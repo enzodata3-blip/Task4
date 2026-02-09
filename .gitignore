@@ -45,5 +45,6 @@ Thumbs.db
 *.pkl
 *.npy
 
-# Exclude .claude directory (local settings)
+# Local
 .claude/
+anaconda_projects/

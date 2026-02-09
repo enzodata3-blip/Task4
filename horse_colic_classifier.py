@@ -245,7 +245,7 @@ def cross_validate(X, y, n_splits=5, model_name="Logistic Regression"):
             "accuracy": (y_pred == y_val).mean(),
             "auc_roc": roc_auc_score(y_val, y_prob),
             "log_loss": log_loss(y_val, y_prob),
-            "f1": (2 * (y_pred == 1) & (y_val == 1)).sum() /
+            "f1": 2 * ((y_pred == 1) & (y_val == 1)).sum() /
                   max(((y_pred == 1).sum() + (y_val == 1).sum()), 1),
             "mcc": matthews_corrcoef(y_val, y_pred),
         })

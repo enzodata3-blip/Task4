@@ -128,28 +128,25 @@ def gradient_ascent(data_matrix, labels, learning_rate=0.001,
     weights      : np.ndarray, shape (n,)
     loss_history : list of float — log-loss at each iteration
     """
-    X = np.mat(data_matrix, dtype=float)     # (m, n)
-    y = np.mat(labels, dtype=float).T        # (m, 1)
+    X = np.array(data_matrix, dtype=float)   # (m, n)
+    y = np.array(labels, dtype=float)        # (m,)
     m, n = X.shape
 
-    weights = np.ones((n, 1))
+    weights = np.ones(n)
     loss_history = []
 
     for _ in range(max_iterations):
-        h = sigmoid(X * weights)             # predicted probabilities (m, 1)
+        h = sigmoid(X @ weights)             # predicted probabilities (m,)
         error = y - h                        # residual
         # L2 penalty gradient (skip bias term at index 0)
-        penalty = np.zeros_like(weights)
+        penalty = np.zeros(n)
         penalty[1:] = l2_lambda * weights[1:]
-        weights = weights + learning_rate * (X.T * error - penalty)
+        weights = weights + learning_rate * (X.T @ error - penalty)
 
         # Record log-loss for convergence monitoring
-        h_arr = np.asarray(h).ravel()
-        y_arr = np.asarray(y).ravel()
-        current_loss = log_loss(y_arr, h_arr)
-        loss_history.append(current_loss)
+        loss_history.append(log_loss(y, sigmoid(X @ weights)))
 
-    return np.asarray(weights).ravel(), loss_history
+    return weights, loss_history
 
 
 # ---------------------------------------------------------------------------
